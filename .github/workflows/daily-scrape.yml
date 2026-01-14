@@ -28,6 +28,8 @@ jobs:
           playwright install-deps chromium
       
       - name: 🔥 执行抓取
+        env:
+          FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
         run: python scraper.py
       
       - name: 📤 提交报告

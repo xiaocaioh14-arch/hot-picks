@@ -1,13 +1,18 @@
 """
 海外爆款选品自动抓取脚本
 使用 Playwright 抓取 Amazon 热销榜数据，生成 HTML 报告
+支持飞书推送通知
 """
 
 import asyncio
 import json
 import os
+import requests
 from datetime import datetime
 from playwright.async_api import async_playwright
+
+# GitHub Pages 报告地址
+REPORT_URL = "https://xiaocaioh14-arch.github.io/hot-picks/reports/latest.html"
 
 # 数据源配置
 DATA_SOURCES = {
@@ -427,6 +432,100 @@ def generate_html_report(products, timestamp):
     
     return html
 
+def send_feishu_notification(products, webhook_url):
+    """发送飞书通知"""
+    if not webhook_url:
+        print("⚠️ 未配置飞书 Webhook，跳过通知")
+        return
+    
+    # 生成时间
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+    
+    # 取 TOP 3 商品
+    top3 = products[:3]
+    
+    # 构建商品列表文本
+    products_text = ""
+    emojis = ["1️⃣", "2️⃣", "3️⃣"]
+    for i, product in enumerate(top3):
+        name = product["name"][:40] + "..." if len(product["name"]) > 40 else product["name"]
+        products_text += f"{emojis[i]} {name}\n    {product['flag']} {product['market']} | 📈 {product['growth']}\n\n"
+    
+    # 构建飞书消息卡片
+    card = {
+        "msg_type": "interactive",
+        "card": {
+            "config": {
+                "wide_screen_mode": True
+            },
+            "header": {
+                "template": "red",
+                "title": {
+                    "tag": "plain_text",
+                    "content": "🔥 海外爆款选品日报"
+                }
+            },
+            "elements": [
+                {
+                    "tag": "div",
+                    "text": {
+                        "tag": "plain_text",
+                        "content": f"📅 {timestamp}"
+                    }
+                },
+                {
+                    "tag": "hr"
+                },
+                {
+                    "tag": "div",
+                    "text": {
+                        "tag": "lark_md",
+                        "content": f"**📊 今日 TOP 3 精选**\n\n{products_text}"
+                    }
+                },
+                {
+                    "tag": "hr"
+                },
+                {
+                    "tag": "action",
+                    "actions": [
+                        {
+                            "tag": "button",
+                            "text": {
+                                "tag": "plain_text",
+                                "content": "📊 查看完整报告"
+                            },
+                            "type": "primary",
+                            "url": REPORT_URL
+                        }
+                    ]
+                },
+                {
+                    "tag": "note",
+                    "elements": [
+                        {
+                            "tag": "plain_text",
+                            "content": "数据来源: Amazon Movers & Shakers + Best Sellers"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+    
+    try:
+        response = requests.post(webhook_url, json=card, timeout=10)
+        if response.status_code == 200:
+            result = response.json()
+            if result.get("StatusCode") == 0 or result.get("code") == 0:
+                print("✅ 飞书通知发送成功")
+            else:
+                print(f"⚠️ 飞书通知发送失败: {result}")
+        else:
+            print(f"⚠️ 飞书通知发送失败: HTTP {response.status_code}")
+    except Exception as e:
+        print(f"⚠️ 飞书通知发送异常: {e}")
+
 async def main():
     """主函数"""
     print("🚀 开始抓取海外爆款数据...")
@@ -484,6 +583,24 @@ async def main():
         f.write(html)
     
     print("✅ 最新报告: reports/latest.html")
+    
+    # 发送飞书通知
+    feishu_webhook = os.environ.get("FEISHU_WEBHOOK", "")
+    if feishu_webhook:
+        # 按增长率排序后的商品用于通知
+        def sort_key(p):
+            if "新进榜" in p["growth"]:
+                return 0
+            elif "%" in p["growth"]:
+                try:
+                    return 1 - int(p["growth"].replace("%", "").replace("+", "")) / 1000
+                except:
+                    return 0.5
+            else:
+                return 0.8
+        
+        sorted_products = sorted(all_products, key=sort_key)[:10]
+        send_feishu_notification(sorted_products, feishu_webhook)
 
 if __name__ == "__main__":
     asyncio.run(main())

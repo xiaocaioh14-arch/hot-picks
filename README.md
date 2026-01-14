@@ -11,7 +11,9 @@
 
 ## 查看报告
 
-📊 **最新报告**：[reports/latest.html](reports/latest.html)
+🌐 **在线预览**：[https://xiaocaioh14-arch.github.io/hot-picks/reports/latest.html](https://xiaocaioh14-arch.github.io/hot-picks/reports/latest.html)
+
+📊 **仓库文件**：[reports/latest.html](reports/latest.html)
 
 ## 手动触发
 
