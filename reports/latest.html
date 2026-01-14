@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海外爆款选品 TOP 10 - 2026-01-14</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f23;
+            --bg-card: #1a1a2e;
+            --accent: #00d4ff;
+            --accent-secondary: #ff6b6b;
+            --accent-green: #4ade80;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #16213e 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            padding: 40px 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 50px; }
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+        .header .meta { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
+        .header .meta span { display: inline-block; margin: 0 10px; }
+        .header .meta .separator { color: var(--accent); }
+        .stats-bar {
+            display: flex; justify-content: center; gap: 40px; margin-top: 25px;
+            padding: 20px; background: rgba(0,212,255,0.05); border-radius: 12px;
+            border: 1px solid rgba(0,212,255,0.1);
+        }
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+        .stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px; }
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px; margin-top: 40px;
+        }
+        .product-card {
+            background: var(--bg-card); border-radius: 16px; overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1); position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,212,255,0.2);
+        }
+        .product-image {
+            width: 100%; height: 200px; object-fit: cover;
+            background: linear-gradient(135deg, #2a2a4a 0%, #1a1a2e 100%);
+            display: flex; align-items: center; justify-content: center; font-size: 4rem;
+        }
+        .product-info { padding: 20px; }
+        .product-rank {
+            position: absolute; top: 15px; left: 15px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            color: white; font-weight: bold; padding: 8px 16px; border-radius: 20px;
+            font-size: 0.85rem; box-shadow: 0 4px 15px rgba(0,212,255,0.3);
+        }
+        .product-market {
+            position: absolute; top: 15px; right: 15px;
+            background: rgba(0,0,0,0.6); color: white; padding: 6px 12px;
+            border-radius: 15px; font-size: 0.75rem; backdrop-filter: blur(10px);
+        }
+        .product-name {
+            font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; line-height: 1.4;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .metrics { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .metric {
+            display: flex; align-items: center; gap: 6px; font-size: 0.9rem;
+            padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,0.05);
+        }
+        .metric.growth { color: var(--accent-green); background: rgba(74,222,128,0.1); }
+        .metric.price { color: var(--accent); background: rgba(0,212,255,0.1); }
+        .metric.hot { color: var(--accent-secondary); background: rgba(255,107,107,0.1); }
+        .growth-bar {
+            width: 100%; height: 6px; background: rgba(255,255,255,0.1);
+            border-radius: 3px; margin: 15px 0; overflow: hidden;
+        }
+        .growth-bar-fill {
+            height: 100%; background: linear-gradient(90deg, var(--accent-green), var(--accent));
+            border-radius: 3px; transition: width 0.5s ease;
+        }
+        .marketing-tips {
+            background: rgba(0,212,255,0.08); border-radius: 12px; padding: 15px;
+            margin-top: 15px; border: 1px solid rgba(0,212,255,0.1);
+        }
+        .marketing-tips h4 {
+            font-size: 0.9rem; color: var(--accent); margin-bottom: 12px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .marketing-tips ul { list-style: none; font-size: 0.85rem; color: var(--text-secondary); }
+        .marketing-tips li {
+            padding: 8px 0; padding-left: 22px; position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .marketing-tips li:last-child { border-bottom: none; }
+        .marketing-tips li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+        .footer {
+            text-align: center; margin-top: 60px; padding: 30px;
+            color: var(--text-secondary); font-size: 0.85rem;
+            background: rgba(0,0,0,0.2); border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .footer p { margin: 8px 0; }
+        .footer .warning { color: var(--accent-secondary); }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .stats-bar { flex-direction: column; gap: 20px; }
+            .products-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🔥 海外爆款选品 TOP 10</h1>
+            <p class="meta">
+                <span>📅 生成时间：2026-01-14 02:38</span>
+                <span class="separator">|</span>
+                <span>🌍 市场：欧洲 · 美国</span>
+                <span class="separator">|</span>
+                <span>📊 数据源：Amazon Movers & Shakers + Best Sellers</span>
+            </p>
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value">10</div>
+                    <div class="stat-label">精选爆款</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">覆盖市场</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">新进榜</div>
+                    <div class="stat-label">最高增长</div>
+                </div>
+            </div>
+        </header>
+        <div class="products-grid">
+            
+            <div class="product-card">
+                <div class="product-image">📦</div>
+                <span class="product-rank">#1</span>
+                <span class="product-market">🇬🇧 英国</span>
+                <div class="product-info">
+                    <h3 class="product-name">Sellotape Original Golden, Multi-Purpose Clear Tape for Household Objects, Clear</h3>
+                    <div class="metrics">
+                        <span class="metric growth">📈 新进榜</span>
+                        <span class="metric price">💰 价格待定</span>
+                        <span class="metric hot">🔥 Movers & Shakers</span>
+                    </div>
+                    <div class="growth-bar">
+                        <div class="growth-bar-fill" style="width: 85%"></div>
+                    </div>
+                    <div class="marketing-tips">
+                        <h4>🎯 营销建议</h4>
+                        <ul>
+                            <li><strong>主打卖点</strong>：品质保证 + 性价比高</li>
+                            <li><strong>目标人群</strong>：大众消费者</li>
+                            <li><strong>建议定价</strong>：参考市场同类产品定价</li>
+                            <li><strong>推广渠道</strong>：多平台推广、社交媒体种草</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="product-card">
+                <div class="product-image">📦</div>
+                <span class="product-rank">#2</span>
+                <span class="product-market">🇬🇧 英国</span>
+                <div class="product-info">
+                    <h3 class="product-name">Sellotape Double Sided Tape, Strong Double Sided Tape for Everyday Use, Mounting</h3>
+                    <div class="metrics">
+                        <span class="metric growth">📈 新进榜</span>
+                        <span class="metric price">💰 价格待定</span>
+                        <span class="metric hot">🔥 Movers & Shakers</span>
+                    </div>
+                    <div class="growth-bar">
+                        <div class="growth-bar-fill" style="width: 80%"></div>
+                    </div>
+                    <div class="marketing-tips">
+                        <h4>🎯 营销建议</h4>
+                        <ul>
+                            <li><strong>主打卖点</strong>：品质保证 + 性价比高</li>
+                            <li><strong>目标人群</strong>：大众消费者</li>
+                            <li><strong>建议定价</strong>：参考市场同类产品定价</li>
+                            <li><strong>推广渠道</strong>：多平台推广、社交媒体种草</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="product-card">
+                <div class="product-image">📦</div>
+                <span class="product-rank">#3</span>
+                <span class="product-market">🇬🇧 英国</span>
+                <div class="product-info">
+                    <h3 class="product-name">Johnstone's - Wall & Ceiling Paint - Antique Cream - Soft Sheen Finish - Emulsio</h3>
+                    <div class="metrics">
+                        <span class="metric growth">📈 新进榜</span>
+                        <span class="metric price">💰 价格待定</span>
+                        <span class="metric hot">🔥 Movers & Shakers</span>
+                    </div>
+                    <div class="growth-bar">
+                        <div class="growth-bar-fill" style="width: 75%"></div>
+                    </div>
+                    <div class="marketing-tips">
+                        <h4>🎯 营销建议</h4>
+                        <ul>
+                            <li><strong>主打卖点</strong>：品质保证 + 性价比高</li>
+                            <li><strong>目标人群</strong>：大众消费者</li>
+                            <li><strong>建议定价</strong>：参考市场同类产品定价</li>
+                            <li><strong>推广渠道</strong>：多平台推广、社交媒体种草</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="product-card">
+                <div class="product-image">📦</div>
+                <span class="product-rank">#4</span>
+                <span class="product-market">🇬🇧 英国</span>
+                <div class="product-info">
+                    <h3 class="product-name">X-Sense Carbon Monoxide Detector, Replaceable Battery Powered CO Alarm with Digi</h3>
+                    <div class="metrics">
+                        <span class="metric growth">📈 新进榜</span>
+                        <span class="metric price">💰 价格待定</span>
+                        <span class="metric hot">🔥 Movers & Shakers</span>
+                    </div>
+                    <div class="growth-bar">
+                        <div class="growth-bar-fill" style="width: 70%"></div>
+                    </div>
+                    <div class="marketing-tips">
+                        <h4>🎯 营销建议</h4>
+                        <ul>
+                            <li><strong>主打卖点</strong>：品质保证 + 性价比高</li>
+                            <li><strong>目标人群</strong>：大众消费者</li>
+                            <li><strong>建议定价</strong>：参考市场同类产品定价</li>
+                            <li><strong>推广渠道</strong>：多平台推广、社交媒体种草</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="product-card">
+                <div class="product-image">📦</div>
+                <span class="product-rank">#5</span>
+                <span class="product-market">🇬🇧 英国</span>
+                <div class="product-info">
+                    <h3 class="product-name">Vanranger Solar Motion Sensor Lights - 248 LED Solar Outdoor Security Garden Lig</h3>
+                    <div class="metrics">
+                        <span class="metric growth">📈 新进榜</span>
+                        <span class="metric price">💰 价格待定</span>
+                        <span class="metric hot">🔥 Movers & Shakers</span>
+                    </div>
+                    <div class="growth-bar">
+                        <div class="growth-bar-fill" style="width: 65%"></div>
+                    </div>
+                    <div class="marketing-tips">
+                        <h4>🎯 营销建议</h4>
+                        <ul>
+                            <li><strong>主打卖点</strong>：品质保证 + 性价比高</li>
+                            <li><strong>目标人群</strong>：大众消费者</li>
+                            <li><strong>建议定价</strong>：参考市场同类产品定价</li>
+                            <li><strong>推广渠道</strong>：多平台推广、社交媒体种草</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="product-card">
+                <div class="product-image">📦</div>
+                <span class="product-rank">#6</span>
+                <span class="product-market">🇬🇧 英国</span>
+                <div class="product-info">
+                    <h3 class="product-name">HSLighting Bedside Lamp Touch Control Table Lamp with Wooden Base Milky Glass Sh</h3>
+                    <div class="metrics">
+                        <span class="metric growth">📈 新进榜</span>
+                        <span class="metric price">💰 价格待定</span>
+                        <span class="metric hot">🔥 Movers & Shakers</span>
+                    </div>
+                    <div class="growth-bar">
+                        <div class="growth-bar-fill" style="width: 60%"></div>
+                    </div>
+                    <div class="marketing-tips">
+                        <h4>🎯 营销建议</h4>
+                        <ul>
+                            <li><strong>主打卖点</strong>：品质保证 + 性价比高</li>
+                            <li><strong>目标人群</strong>：大众消费者</li>
+                            <li><strong>建议定价</strong>：参考市场同类产品定价</li>
+                            <li><strong>推广渠道</strong>：多平台推广、社交媒体种草</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="product-card">
+                <div class="product-image">📦</div>
+                <span class="product-rank">#7</span>
+                <span class="product-market">🇬🇧 英国</span>
+                <div class="product-info">
+                    <h3 class="product-name">GMY Lighting G9 Halogen Bulbs Clear Capsule 28W 8Pack 230V 370Lm 2800K Warm Whit</h3>
+                    <div class="metrics">
+                        <span class="metric growth">📈 新进榜</span>
+                        <span class="metric price">💰 价格待定</span>
+                        <span class="metric hot">🔥 Movers & Shakers</span>
+                    </div>
+                    <div class="growth-bar">
+                        <div class="growth-bar-fill" style="width: 55%"></div>
+                    </div>
+                    <div class="marketing-tips">
+                        <h4>🎯 营销建议</h4>
+                        <ul>
+                            <li><strong>主打卖点</strong>：品质保证 + 性价比高</li>
+                            <li><strong>目标人群</strong>：大众消费者</li>
+                            <li><strong>建议定价</strong>：参考市场同类产品定价</li>
+                            <li><strong>推广渠道</strong>：多平台推广、社交媒体种草</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="product-card">
+                <div class="product-image">📦</div>
+                <span class="product-rank">#8</span>
+                <span class="product-market">🇬🇧 英国</span>
+                <div class="product-info">
+                    <h3 class="product-name">Lepro UV Torch, 51 LED UV Light Torch, 395nm Ultraviolet Flashlight, Blacklight </h3>
+                    <div class="metrics">
+                        <span class="metric growth">📈 新进榜</span>
+                        <span class="metric price">💰 价格待定</span>
+                        <span class="metric hot">🔥 Movers & Shakers</span>
+                    </div>
+                    <div class="growth-bar">
+                        <div class="growth-bar-fill" style="width: 50%"></div>
+                    </div>
+                    <div class="marketing-tips">
+                        <h4>🎯 营销建议</h4>
+                        <ul>
+                            <li><strong>主打卖点</strong>：品质保证 + 性价比高</li>
+                            <li><strong>目标人群</strong>：大众消费者</li>
+                            <li><strong>建议定价</strong>：参考市场同类产品定价</li>
+                            <li><strong>推广渠道</strong>：多平台推广、社交媒体种草</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="product-card">
+                <div class="product-image">🥤</div>
+                <span class="product-rank">#9</span>
+                <span class="product-market">🇬🇧 英国</span>
+                <div class="product-info">
+                    <h3 class="product-name">Stanley 1913 Flip Straw 2.0 Sports Water Bottle with Straw 1.06L - 15 Hours Cold</h3>
+                    <div class="metrics">
+                        <span class="metric growth">📈 新进榜</span>
+                        <span class="metric price">💰 价格待定</span>
+                        <span class="metric hot">🔥 Movers & Shakers</span>
+                    </div>
+                    <div class="growth-bar">
+                        <div class="growth-bar-fill" style="width: 45%"></div>
+                    </div>
+                    <div class="marketing-tips">
+                        <h4>🎯 营销建议</h4>
+                        <ul>
+                            <li><strong>主打卖点</strong>：舒适握感 + 家用健身必备</li>
+                            <li><strong>目标人群</strong>：居家健身人群、健身初学者</li>
+                            <li><strong>建议定价</strong>：性价比路线¥59-99</li>
+                            <li><strong>推广渠道</strong>：健身博主推荐、运动类社群</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="product-card">
+                <div class="product-image">📦</div>
+                <span class="product-rank">#10</span>
+                <span class="product-market">🇬🇧 英国</span>
+                <div class="product-info">
+                    <h3 class="product-name">FitBeast Grip Strengthener Forearm Strengthener Hand Grips Strengthener Kit - 5 </h3>
+                    <div class="metrics">
+                        <span class="metric growth">📈 新进榜</span>
+                        <span class="metric price">💰 价格待定</span>
+                        <span class="metric hot">🔥 Movers & Shakers</span>
+                    </div>
+                    <div class="growth-bar">
+                        <div class="growth-bar-fill" style="width: 40%"></div>
+                    </div>
+                    <div class="marketing-tips">
+                        <h4>🎯 营销建议</h4>
+                        <ul>
+                            <li><strong>主打卖点</strong>：品质保证 + 性价比高</li>
+                            <li><strong>目标人群</strong>：大众消费者</li>
+                            <li><strong>建议定价</strong>：参考市场同类产品定价</li>
+                            <li><strong>推广渠道</strong>：多平台推广、社交媒体种草</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        <footer class="footer">
+            <p class="warning">⚠️ 数据仅供参考，具体选品请结合实际市场情况和供应链能力综合分析</p>
+            <p>📊 数据来源：Amazon Movers & Shakers + Best Sellers 榜单</p>
+            <p>⏱️ 数据时效性：每日自动更新</p>
+            <p>🤖 由 GitHub Actions 自动生成</p>
+        </footer>
+    </div>
+</body>
+</html>
